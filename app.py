@@ -22,11 +22,14 @@ past_purchase = st.sidebar.number_input("Past Purchase (₹)", 0, 500000, 30000)
 
 # Prepare Input
 X = np.array([[engagement, visits, purchase_value, purchase_freq, retention_rate, past_purchase]])
+X_clv = np.array([[purchase_value, purchase_freq, retention_rate]])
+
 
 # Predictions
 lead_pred_encoded = lead_model.predict(X)[0]
 lead_pred = label_encoder.inverse_transform([lead_pred_encoded])[0]
-clv_pred = clv_model.predict(X)[0]
+#clv_pred = clv_model.predict(X)[0]
+clv_pred = clv_model.predict(X_clv)[0]
 
 # Output
 st.subheader("📊 AI Predictions")

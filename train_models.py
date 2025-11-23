@@ -63,8 +63,17 @@ pickle.dump(clf, open("lead_model.pkl", "wb"))
 pickle.dump(label, open("label_encoder.pkl", "wb"))
 
 # Train CLV Model
+# reg = RandomForestRegressor()
+# reg.fit(X_train, data.loc[X_train.index, "clv"])
+X_clv = data[["purchase_value", "purchase_freq", "retention_rate"]]
+
+Xc_train, Xc_test, yc_train, yc_test = train_test_split(
+    X_clv, data["clv"], test_size=0.2
+)
+
 reg = RandomForestRegressor()
-reg.fit(X_train, data.loc[X_train.index, "clv"])
+reg.fit(Xc_train, yc_train)
+
 pickle.dump(reg, open("clv_model.pkl", "wb"))
 
 print("Models trained and saved successfully!")
